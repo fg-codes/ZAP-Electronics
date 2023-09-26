@@ -302,7 +302,7 @@ express()
   .get('/category/:category', getItemsByCategory) // Endpoint for getting all items within a specified category.
   .get('/items/:itemId', getSingleItem) // Endpoint for getting a single item based on its ID
   .get('/brands', getBrands) // Endpoint for getting all companies
-  .get('/items-by-company/:companyId', getItemsByCompany) //Endpoint for getting items by a specific companyId
+  .get('/brand/:companyId', getItemsByCompany) //Endpoint for getting items by a specific companyId
   .get('/brands/:brandId', getBrand) // Enpoint for getting a Brand details based on its id
   .get('/cart', getCart) // Endpoint for getting the cart.
   .put('/cart', addToCart) // Endpoint for adding an item to the cart.

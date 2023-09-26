@@ -12,7 +12,7 @@ import { COLORS } from "../GlobalStyles";
 
 export const Brand = () => {
   const { brandId } = useParams();
-  const { data: items } = useFetch(`/items-by-company/${brandId}`);
+  const { data: items } = useFetch(`/brand/${brandId}`);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(9);
 

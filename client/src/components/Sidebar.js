@@ -1,14 +1,23 @@
-import { styled } from "styled-components";
-import { useFetch } from "./useFetch";
-import { Link, NavLink } from "react-router-dom";
+import { useState } from 'react';
+import { useFetch } from './useFetch';
+import { Link, NavLink } from 'react-router-dom';
 
 import logo from './assets/logo.png'
-import { COLORS } from "../GlobalStyles";
+import { COLORS } from '../GlobalStyles';
+import { styled } from 'styled-components';
 
 // sidebar = side bar
 export const Sidebar = () => {
-  const {data: categories} = useFetch('/categories')
-  const {data: brands} = useFetch('/brands')
+  const { data: categories } = useFetch('/categories');
+  const { data: brands } = useFetch('/brands');
+  const [showMoreItems, setShowMoreItems] = useState(20);
+
+  const handleShowMore = () => {
+    setShowMoreItems(prev => prev + 10)
+    setTimeout(() => {
+      setShowMoreItems(20)
+    }, 10_000);
+  }
 
   return (
     <Section>
@@ -25,13 +34,14 @@ export const Sidebar = () => {
       </Container>
       <H3>Shop by brand</H3>
       <Container>
-        {brands && (brands.data.map(brand => {
-          return (
-            <li key={brand._id}>
-              <StyledNavLink to={`/items-by-company/${brand._id}`}>{brand.name}</StyledNavLink>
+        {brands && (brands.data.map((brand, index) => {
+          return showMoreItems > index
+            ? <li key={brand._id}>
+              <StyledNavLink to={`/brand/${brand._id}`} onClick={() => setShowMoreItems(20)}>{brand.name}</StyledNavLink>
             </li>
-          )
+            : null
         }))}
+        <button onClick={handleShowMore}>Show more brands</button>
       </Container>
     </Section>
   )
