@@ -14,7 +14,7 @@ const batchImport = async () => {
     const client = new MongoClient(MONGO_URI, options);
     try {
         await client.connect();
-        const db = client.db('shop');
+        const db = client.db('zap');
         const itemCollection = db.collection('items');
         const companyCollection = db.collection('companies');
         const insertItemData = await itemCollection.insertMany(items);
