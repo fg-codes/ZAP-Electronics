@@ -6,7 +6,6 @@ import logo from './assets/logo.png'
 import { COLORS } from '../GlobalStyles';
 import { styled } from 'styled-components';
 
-// sidebar = side bar
 export const Sidebar = () => {
   const { data: categories } = useFetch('/categories');
   const { data: brands } = useFetch('/brands');
@@ -14,9 +13,6 @@ export const Sidebar = () => {
 
   const handleShowMore = () => {
     setShowMoreItems(prev => prev + 10)
-    setTimeout(() => {
-      setShowMoreItems(20)
-    }, 10_000);
   }
 
   return (
@@ -27,7 +23,7 @@ export const Sidebar = () => {
         {categories && (categories.data.map(category => {
           return (
             <li key={category}>
-              <StyledNavLink to={`/category/${category}`}>{category}</StyledNavLink>
+              <StyledNavLink to={`/category/${category}`} onClick={() => setShowMoreItems(20)}>{category}</StyledNavLink>
             </li>
           )
         }))}
@@ -41,11 +37,37 @@ export const Sidebar = () => {
             </li>
             : null
         }))}
-        <button onClick={handleShowMore}>Show more brands</button>
+        <ShowMoreBTN onClick={handleShowMore} disabled={brands.data.length < showMoreItems}>Show more brands</ShowMoreBTN>
       </Container>
     </Section>
   )
 }
+
+const ShowMoreBTN = styled.button`
+  border: none;
+  background-color: ${COLORS.orange};
+  width: 120%;
+  margin-left: -20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  color: ${COLORS.charcoal};
+  transition: all 200ms ease;
+    &:hover {
+    transform: scale(1.05);
+  }
+  &:disabled {
+    cursor: not-allowed;
+    background-color: ${COLORS.light_gray}AA;
+    color: ${COLORS.light_gray};
+    &:hover {
+    transform: none;
+  }
+`;
 
 const Section = styled.section`
   width: fit-content;

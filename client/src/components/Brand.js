@@ -16,6 +16,8 @@ export const Brand = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(9);
 
+  window.scrollTo(0, 0);
+
   if (!items) {
     return null;
   }
