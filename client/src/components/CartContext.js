@@ -49,7 +49,7 @@ export const CartProvider = ({ children }) => {
 
   const deleteFromCart = (itemId, numInStock) => {
     fetch('/cart', {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
         'Accept': 'application/json',
         'Content-type': 'application/json'
