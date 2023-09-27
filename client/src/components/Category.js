@@ -1,15 +1,15 @@
 
-import { useFetch } from "./useFetch"
-import { useState, useEffect, useRef } from 'react'
-import { useParams } from "react-router-dom"
-import { styled } from "styled-components"
-import { ItemTile } from "./ItemTile"
-import { COLORS } from "../GlobalStyles"
+import { useFetch } from './useFetch';
+import { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { styled } from 'styled-components';
+import { ItemTile } from './ItemTile.js';
+import { COLORS } from '../GlobalStyles.js';
 
 // 3x3 grid for each category
 export const Category = () => {
   const { category } = useParams();
-  const {data: items} = useFetch(`/category/${category}`);
+  const { data: items } = useFetch(`/category/${category}`);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(9);
 
@@ -30,7 +30,7 @@ export const Category = () => {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber)
-    window.scrollTo({ top, behavior: "smooth" });
+    window.scrollTo({ top, behavior: 'smooth' });
   }
 
   return (
@@ -43,10 +43,9 @@ export const Category = () => {
       <Pagination>
         {Array.from({ length: Math.ceil(items.data.length / itemsPerPage) }, (_, index) => (
           <PageNumber
-            key={index + 1}
+            key={`Page${index+1}`}
             onClick={() => handlePageChange(index + 1)}
-            $active={currentPage === index + 1 ? 'true' : 'false'}
-          >
+            $active={currentPage === index + 1}>
             {index + 1}
           </PageNumber>
         ))}
@@ -79,5 +78,5 @@ const PageNumber = styled.div`
     color: ${COLORS.orange};
   }
 
-  ${({ $active }) => $active === 'true' && `color: ${COLORS.orange}; font-weight: bold; scale: 1.1`}
+  ${({ $active }) => $active && `color: ${COLORS.orange}; font-weight: bold; scale: 1.1`}
 `;

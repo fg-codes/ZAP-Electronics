@@ -37,7 +37,7 @@ export const Sidebar = () => {
             </li>
             : null
         }))}
-        <ShowMoreBTN onClick={handleShowMore} disabled={brands.data.length < showMoreItems}>Show more brands</ShowMoreBTN>
+        <ShowMoreBTN onClick={handleShowMore} disabled={brands?.data?.length < showMoreItems}>Show more brands</ShowMoreBTN>
       </Container>
     </Section>
   )
