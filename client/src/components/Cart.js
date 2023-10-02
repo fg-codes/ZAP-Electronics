@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 export const Cart = () => {
   const navigate = useNavigate()
   const { cartItems, cartModal, setCartModal } = useContext(CartContext);
-  const subtotal = cartItems ? cartItems.reduce((acc, item) => +acc + +item.price.substring(1) * item.quantity, 0) : 0
+  // const subtotal = cartItems ? cartItems.reduce((acc, item) => +acc + +item.price.substring(1) * item.quantity, 0) : 0
 
   // prevend scrolling when the modal is open
   useEffect(() => {
@@ -37,14 +37,14 @@ export const Cart = () => {
           <Spacer />
           {cartItems.length > 0
             ? cartItems.map(item => {
-              return <CartTile item={item} key={item.id} />
+              return <CartTile item={item} key={item.item._id} />
             })
             : <EmptyCart />
           }
         </div>
         {cartItems.length > 0 &&
           <div>
-            <SubTotalWrapper>Subtotal: <span>${subtotal.toFixed(2)}</span></SubTotalWrapper>
+            {/* <SubTotalWrapper>Subtotal: <span>${subtotal.toFixed(2)}</span></SubTotalWrapper> */}
             <Checkout onClick={(e) => handleClickClose(e, 'checkout')}>PROCEED TO CHECKOUT</Checkout>
           </div>}
       </Modal>

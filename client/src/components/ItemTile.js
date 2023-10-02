@@ -14,7 +14,7 @@ export const ItemTile = ({ item }) => {
   const addItemToCart = (event) => {
     event.preventDefault();
     setBought(true)
-    addToCart(item._id, item.numInStock, 1);
+    addToCart(item, 1);
   }
 
   // check if item is in stock

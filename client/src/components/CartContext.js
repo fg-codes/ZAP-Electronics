@@ -20,31 +20,45 @@ export const CartProvider = ({ children }) => {
       .catch(error => console.log(error))
   }
 
-  const addToCart = (id, numInStock, quantity) => {
-    fetch(`/items/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        fetch('/cart', {
-          method: 'PUT',
-          headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json'
-          },
-          body: JSON.stringify({
-            id: data.data._id,
-            name: data.data.name,
-            price: data.data.price,
-            category: data.data.category,
-            imageSrc: data.data.imageSrc,
-            numInStock: numInStock - quantity,
-            quantity
-          })
-        })
-          .then(res => res.json())
-          .then(() => fetchCart())
-          .catch((error) => console.log(error))
-      })
-      .catch(error => console.log(error))
+  const addToCart = (item, quantity) => {
+    setCartItems([...cartItems, { item, quantity }])
+    // fetch(`/items/${id}`)
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     fetch('/cart', {
+    //       method: 'PUT',
+    //       headers: {
+    //         'Accept': 'application/json',
+    //         'Content-type': 'application/json'
+    //       },
+    //       body: JSON.stringify({
+    //         id: data.data._id,
+    //         name: data.data.name,
+    //         price: data.data.price,
+    //         category: data.data.category,
+    //         imageSrc: data.data.imageSrc,
+    //         numInStock: numInStock - quantity,
+    //         quantity
+    //       })
+    //     })
+    //       .then(res => res.json())
+    //       .then(() => fetchCart())
+    //       .catch((error) => console.log(error))
+    //   })
+    //   .catch(error => console.log(error))
+  }
+
+  const updateCart = (op, item, quantity) => {
+    switch (op) {
+      case 'updateQty': {
+        console.log(op, item, quantity);
+        return;
+      }
+      case 'delete': {
+        console.log(op, item)
+        return;
+      }
+    }
   }
 
   const deleteFromCart = (itemId, numInStock) => {
@@ -56,13 +70,13 @@ export const CartProvider = ({ children }) => {
       },
       body: JSON.stringify({ itemId, numInStock })
     })
-    .then(res => res.json())
-    .then(() => fetchCart())
-    .catch(error => console.log(error))
+      .then(res => res.json())
+      .then(() => fetchCart())
+      .catch(error => console.log(error))
   }
 
   return (
-    <CartContext.Provider value={{ cartItems, setCartItems, addToCart, cartModal, setCartModal, deleteFromCart }}>
+    <CartContext.Provider value={{ cartItems, setCartItems, addToCart, cartModal, setCartModal, updateCart, deleteFromCart }}>
       {children}
     </CartContext.Provider>
   )

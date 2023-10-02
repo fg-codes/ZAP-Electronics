@@ -62,7 +62,7 @@ export const Item = () => {
   // handle for when the user click the add to the cart button
   const addItemToCart = (event) => {
     event.preventDefault();
-    addToCart(itemId, item.data.numInStock, status.quantity);
+    addToCart(item.data, status.quantity);
     setStatus({ ...status, status: 'bought' })
   }
 
