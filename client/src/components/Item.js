@@ -27,7 +27,7 @@ const getFirstFourRandomItems = (array) => {
 export const Item = () => {
   const { itemId } = useParams();
   const { data: item } = useFetch(`/items/${itemId}`);
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, cartItems } = useContext(CartContext);
   const [brand, setBrand] = useState(null);
   const [status, setStatus] = useState({ status: 'idle', quantity: 1 });
   const [randomItems, setRandomItems] = useState([])
@@ -36,7 +36,6 @@ export const Item = () => {
 
   // we need to fetch the brand details every time we load the item page
   useEffect(() => {
-    setStatus({ status: 'idle', quantity: 1 })
     item &&
       fetch(`/brands/${item.data.companyId}`)
         .then(res => res.json())
@@ -68,10 +67,10 @@ export const Item = () => {
 
   // handle for the - and + buttons
   const handleCalc = (op) => {
-    if (op === 'decrement' && status.quantity > 1) {
+    if (op === 'dec' && status.quantity > 1) {
       setStatus({ ...status, quantity: status.quantity - 1 })
     }
-    else if (op === 'increment' && status.quantity < item.data.numInStock) {
+    else if (op === 'inc' && status.quantity < item.data.numInStock) {
       setStatus({ ...status, quantity: status.quantity + 1 })
     }
   }
@@ -93,11 +92,11 @@ export const Item = () => {
             ? <Grid>
               <H2>{item.data.price}</H2>
               <div>
-                <P>Quantity in stock: <S>{status.status === "bought" ? item.data.numInStock - status.quantity : item.data.numInStock}</S></P>
+                <P>Quantity in stock: <S>{item.data.numInStock}</S></P>
                 <QuantityDiv>
-                  <CalcButton onClick={() => handleCalc('decrement')}>-</CalcButton>
+                  <CalcButton onClick={() => handleCalc('dec')}>-</CalcButton>
                   {status.quantity}
-                  <CalcButton onClick={() => handleCalc('increment')}>+</CalcButton>
+                  <CalcButton onClick={() => handleCalc('inc')}>+</CalcButton>
                 </QuantityDiv>
               </div>
             </Grid>
