@@ -13,10 +13,6 @@ export const Cart = () => {
   const { cartItems, cartModal, setCartModal } = useContext(CartContext);
   const subtotal = cartItems ? cartItems.reduce((acc, item) => +acc + +item.item.price.substring(1) * item.quantity, 0) : 0
 
-  // console.log(cartItems.reduce((acc, item) => acc + item.item.price.substring(1) * item.quantity, 0))
-
-  // console.log(cartItems[0].item.price)
-
   // prevend scrolling when the modal is open
   useEffect(() => {
     if (cartModal) {
