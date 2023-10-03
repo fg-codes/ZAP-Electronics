@@ -7,7 +7,7 @@ import { FaCheck } from 'react-icons/fa'
 
 // each tile is called 9 times in each category section (3x3 grid)
 export const ItemTile = ({ item }) => {
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, cartItems } = useContext(CartContext);
   const [bought, setBought] = useState(false);
 
   // quick add to cart button

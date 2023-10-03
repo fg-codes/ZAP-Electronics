@@ -17,7 +17,7 @@ export const Checkout = () => {
   const [orderSummary, setOrderSummary] = useState({});
   const [validity, setValidity] = useState({ status: null, show: false });
 
-  const subtotal = cartItems.reduce((acc, item) => +acc + +item.price.substring(1) * item.quantity, 0);
+  const subtotal = cartItems.reduce((acc, item) => +acc + +item.item.price.substring(1) * item.quantity, 0);
   const taxes = subtotal * 0.07;
   const total = subtotal + taxes;
 

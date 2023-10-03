@@ -22,40 +22,22 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (item, quantity) => {
     setCartItems([...cartItems, { item, quantity }])
-    // fetch(`/items/${id}`)
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     fetch('/cart', {
-    //       method: 'PUT',
-    //       headers: {
-    //         'Accept': 'application/json',
-    //         'Content-type': 'application/json'
-    //       },
-    //       body: JSON.stringify({
-    //         id: data.data._id,
-    //         name: data.data.name,
-    //         price: data.data.price,
-    //         category: data.data.category,
-    //         imageSrc: data.data.imageSrc,
-    //         numInStock: numInStock - quantity,
-    //         quantity
-    //       })
-    //     })
-    //       .then(res => res.json())
-    //       .then(() => fetchCart())
-    //       .catch((error) => console.log(error))
-    //   })
-    //   .catch(error => console.log(error))
   }
 
   const updateCart = (op, item, quantity) => {
     switch (op) {
       case 'updateQty': {
-        console.log(op, item, quantity);
+        const updatedQty = cartItems.map(cartItem => {
+          return cartItem.item._id === item.item._id ? { ...cartItem, quantity } : cartItem
+        })
+        setCartItems(updatedQty)
         return;
       }
       case 'delete': {
-        console.log(op, item)
+        setCartItems(cartItems.filter(cartItem => cartItem.item._id !== item.item._id));
+        return;
+      }
+      default: {
         return;
       }
     }
