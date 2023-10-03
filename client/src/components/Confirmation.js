@@ -1,31 +1,30 @@
-import { useParams } from "react-router-dom";
-import { useFetch } from "./useFetch";
-import styled from "styled-components";
-import { COLORS, FONTS } from "../GlobalStyles";
-import celebrate from './assets/celebrate.png'
-import logo from './assets/logo.png'
-import visa from './assets/visa.png'
-import amex from './assets/amex.png'
-import mc from './assets/mc.png'
+import { useParams } from 'react-router-dom';
+import { useFetch } from './useFetch';
+import styled from 'styled-components';
+import { COLORS, FONTS } from '../GlobalStyles';
+import celebrate from './assets/celebrate.png';
+import logo from './assets/logo.png';
+import visa from './assets/visa.png';
+import amex from './assets/amex.png';
+import mc from './assets/mc.png';
 
 // Component function for when a user successfully orders
 export const Confirmation = () => {
   const { orderId } = useParams();
   const { data } = useFetch(`/order/${orderId}`);
-  const order = data && data.data
-  console.log(order)
-  const orderDate = data && new Date(order.date).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  const order = data && data.data;
+  const orderDate = data && new Date(order.date).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
   window.scrollTo(0, 0);
 
   const getCCIcon = () => {
     if (order.orderSummary.creditCard === 'visa') {
-      return visa
+      return visa;
     }
     else if (order.orderSummary.creditCard === 'amex') {
-      return amex
+      return amex;
     }
     else if (order.orderSummary.creditCard === 'mc') {
-      return mc
+      return mc;
     }
   }
 
