@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
-import { CartContext } from "./CartContext";
+import { useContext, useEffect, useState } from 'react';
+import { CartContext } from './CartContext';
 import { useNavigate } from 'react-router-dom'
-import { CartTile } from "./CartTile";
-import styled from "styled-components";
-import { COLORS, FONTS } from "../GlobalStyles";
-import { EmptyCart } from "./EmptyCart";
+import { CartTile } from './CartTile';
+import styled from 'styled-components';
+import { COLORS, FONTS } from '../GlobalStyles';
+import { EmptyCart } from './EmptyCart';
 import visa from './assets/visa.png'
 import amex from './assets/amex.png'
 import mc from './assets/mc.png'
@@ -92,34 +92,34 @@ export const Checkout = () => {
           <Spacer />
           <Label><Input onChange={(e) => handleChange(e, 'user')}
             disabled={cartItems.length === 0}
-            type="text" name="name" placeholder="Name" required /></Label>
+            type='text' id='name' name='name' placeholder='Name' required /></Label>
 
           <Label><Input onChange={(e) => handleChange(e, 'user')}
-            type="text" name="address" placeholder="Address" required /></Label>
+            type='text' id='address' name='address' placeholder='Address' required /></Label>
 
           <Label><Input
             onChange={(e) => handleChange(e, 'user')}
-            type="email" name="email" placeholder="Email" required /></Label>
+            type='email' id='email' name='email' placeholder='Email' required /></Label>
 
           <Label><Input
             onChange={(e) => handleChange(e, 'user')}
-            type="tel" name="phone" placeholder="Phone" required /></Label>
+            type='tel' id='phone' name='phone' placeholder='Phone' required /></Label>
 
           <Spacer />
 
           <Label style={{ position: 'relative' }}><Input
             onChange={(e) => handleChange(e, 'card')}
-            type="text" name="cardNumber" placeholder="Card Number" required autoComplete="off" />
+            type='text' id='cardNumber' name='cardNumber' placeholder='Card Number' required autoComplete='off' />
             {validity.show && <InvalidCard>* Please provide a valid Credit Card number</InvalidCard>}
             <CCIcon src={validity.status} $show={validity.status} alt='credit card logo' />
           </Label>
 
           <HalfSizeInput>
             <Label><Input
-              type="text" name="expiryDate" placeholder="Expiry Date" required autoComplete="off" /></Label>
+              type='text' id='expiryDate' name='expiryDate' placeholder='Expiry Date' required autoComplete='off' /></Label>
 
             <Label><Input
-              type="text" name="cvv" placeholder="CVV" required autoComplete="off" /></Label>
+              type='text' id='CVV' name='cvv' placeholder='CVV' required autoComplete='off' /></Label>
           </HalfSizeInput>
 
           <Spacer />
@@ -127,12 +127,12 @@ export const Checkout = () => {
           <PriceDetails><span>Shipping:</span> <FreeSpan>Free</FreeSpan></PriceDetails>
           <PriceDetails><span>Estimated taxes:</span> ${taxes.toFixed(2)}</PriceDetails>
           <PriceDetailsTotal><P>Total:</P> <P> ${total.toFixed(2)}</P></PriceDetailsTotal>
-          <CheckoutButton type="submit">COMPLETE PURCHASE</CheckoutButton>
+          <CheckoutButton type='submit'>COMPLETE PURCHASE</CheckoutButton>
         </Form>
 
         <Cart>
           {cartItems && cartItems.map(item => {
-            return <CartTile item={item} key={item.id} />
+            return <CartTile item={item} key={item.item._id} />
           })}
         </Cart>
       </Section>
