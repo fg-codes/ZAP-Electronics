@@ -8,7 +8,7 @@ const options = { useNewUrlParser: true, useunifiedTopology: true };
 
 const client = new MongoClient(MONGO_URI, options);
 client.connect();
-const db = client.db('zap');
+const db = client.db('shop');
 
 const PORT = 4000;
 
