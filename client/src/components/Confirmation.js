@@ -13,6 +13,7 @@ export const Confirmation = () => {
   const { orderId } = useParams();
   const { data } = useFetch(`/order/${orderId}`);
   const order = data && data.data
+  console.log(order)
   const orderDate = data && new Date(order.date).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
   window.scrollTo(0, 0);
 
@@ -49,14 +50,15 @@ export const Confirmation = () => {
       <Spacer />
       <div style={{ width: '100%' }}>
         {order.orderSummary.cartItems.map((item) => {
+          const { _id, imageSrc, name, price } = item.item
           return (
-            <div key={item.id}>
+            <div key={_id}>
               <Item>
-                <img style={{ width: '20%' }} src={item.imageSrc} alt={item.name} />
+                <img style={{ width: '20%' }} src={imageSrc} alt={name} />
                 <Content>
-                  <span style={{ color: COLORS.charcoal }}>{item.name}</span>
+                  <span style={{ color: COLORS.charcoal }}>{name}</span>
                   <ItemDetails>
-                    <span>Price: <span style={{ color: COLORS.charcoal }}>{item.price}</span></span>
+                    <span>Price: <span style={{ color: COLORS.charcoal }}>{price}</span></span>
                     <span>Quantity: {item.quantity}</span>
                   </ItemDetails>
                 </Content>

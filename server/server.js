@@ -304,9 +304,9 @@ express()
   .get('/brands', getBrands) // Endpoint for getting all companies
   .get('/brand/:companyId', getItemsByCompany) //Endpoint for getting items by a specific companyId
   .get('/brands/:brandId', getBrand) // Enpoint for getting a Brand details based on its id
-  .get('/cart', getCart) // Endpoint for getting the cart.
-  .put('/cart', addToCart) // Endpoint for adding an item to the cart.
-  .patch('/cart', deleteFromCart) // Endpoint for deleting an item from the cart.
+  // .get('/cart', getCart) // Endpoint for getting the cart.
+  // .put('/cart', addToCart) // Endpoint for adding an item to the cart.
+  // .patch('/cart', deleteFromCart) // Endpoint for deleting an item from the cart.
   .get('/order/:orderId', getOrder) // Get an order based on an ID
   .post('/order', newOrder) // endpoints for submittimg an order.
   .get('/search/:query', searchItems) // Endpoint to search items.
