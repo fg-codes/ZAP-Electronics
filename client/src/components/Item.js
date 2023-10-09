@@ -27,7 +27,7 @@ const getFirstFourRandomItems = (array) => {
 export const Item = () => {
   const { itemId } = useParams();
   const { data: item } = useFetch(`/items/${itemId}`);
-  const { addToCart, cartItems } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
   const [brand, setBrand] = useState(null);
   const [status, setStatus] = useState({ status: 'idle', quantity: 1 });
   const [randomItems, setRandomItems] = useState([])

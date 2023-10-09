@@ -1,13 +1,13 @@
-import { styled } from "styled-components";
-import { COLORS } from "../GlobalStyles";
-import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
-import { CartContext } from "./CartContext";
+import { styled } from 'styled-components';
+import { COLORS } from '../GlobalStyles';
+import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { CartContext } from './CartContext';
 import { FaCheck } from 'react-icons/fa'
 
 // each tile is called 9 times in each category section (3x3 grid)
 export const ItemTile = ({ item }) => {
-  const { addToCart, cartItems } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
   const [bought, setBought] = useState(false);
 
   // quick add to cart button
