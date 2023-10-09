@@ -8,7 +8,20 @@ export const CartProvider = ({ children }) => {
   const [cartModal, setCartModal] = useState(false);
 
   const addToCart = (item, quantity) => {
-    setCartItems([...cartItems, { item, quantity }])
+    const findIndex = cartItems.findIndex(cartItem => cartItem.item._id === item._id)
+    if (findIndex > -1) {
+      
+      const newQuantity = item.numInStock <= cartItems[findIndex].quantity + quantity
+        ? item.numInStock
+        : cartItems[findIndex].quantity + quantity
+
+      let newCart = [...cartItems];
+      newCart[findIndex].quantity = newQuantity;
+      setCartItems(newCart);
+    }
+    else {
+      setCartItems([...cartItems, { item, quantity }])
+    }
   }
 
   const updateCart = (op, item, quantity) => {
