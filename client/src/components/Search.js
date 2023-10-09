@@ -1,76 +1,59 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { styled } from 'styled-components';
 import { COLORS } from '../GlobalStyles';
 import { ItemTile } from './ItemTile';
-import { EmptySearch } from "./EmptySearch";
-
-
+import { EmptySearch } from './EmptySearch';
 
 export const Search = () => {
-    const [searchResults, setSearchResults] = useState([])
-    const { query } = useParams()
+  const [searchResults, setSearchResults] = useState([])
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(9);
+  const [params, setParams] = useSearchParams();
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(9);
+  const query = params.get('q')
+  const top = useRef(null);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = searchResults?.slice(indexOfFirstItem, indexOfLastItem);
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = searchResults.slice(indexOfFirstItem, indexOfLastItem);
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber)
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
 
-    const top = useRef(null);
+  useEffect(() => {
+    fetch(`/search?q=${query}`)
+      .then((res) => res.json())
+      .then((data) => setSearchResults(data.data))
+      .catch((error) => console.log(error))
+  }, [query])
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber)
-        window.scrollTo({ top, behavior: "smooth" });
-    }
-
-    const fetchItems = async () => {
-        try {
-            const response = await fetch(`/search/${query}`)
-            const data = await response.json()
-            if (response.ok) {
-                setSearchResults(data.data)
-            } else {
-                console.error(data.message)
-                setSearchResults([])
-            }
-        } catch (error) {
-            console.error('Error fetching items:', error)
-            setSearchResults([])
-        }
-    }
-
-    useEffect(() => {
-        fetchItems()
-    }, [query])
-
-    return (
-        <>
-            {searchResults.length === 0 ? (
-                <EmptySearch />
-            ) : (
-                <>
-                    <GridContainer ref={top}>
-                        {currentItems.map((item) => (
-                            <ItemTile key={item._id} item={item} />
-                        ))}
-                    </GridContainer>
-                    <Pagination>
-                        {Array.from({ length: Math.ceil(searchResults.length / itemsPerPage) }, (_, index) => (
-                            <PageNumber
-                                key={index + 1}
-                                onClick={() => handlePageChange(index + 1)}
-                                $active={currentPage === index + 1 ? 'true' : 'false'}
-                            >
-                                {index + 1}
-                            </PageNumber>
-                        ))}
-                    </Pagination>
-                </>
-            )}
+  return (
+    <>
+      {searchResults.length === 0
+        ? <EmptySearch />
+        : <>
+          <GridContainer ref={top}>
+            {currentItems.map((item) => (
+              <ItemTile key={item._id} item={item} />
+            ))}
+          </GridContainer>
+          <Pagination>
+            {Array.from({ length: Math.ceil(searchResults.length / itemsPerPage) }, (_, index) => (
+              <PageNumber
+                key={index + 1}
+                onClick={() => handlePageChange(index + 1)}
+                $active={currentPage === index + 1 ? 'true' : 'false'}
+              >
+                {index + 1}
+              </PageNumber>
+            ))}
+          </Pagination>
         </>
-    );
+      }
+    </>
+  );
 }
 
 const GridContainer = styled.div`

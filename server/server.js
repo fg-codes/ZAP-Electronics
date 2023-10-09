@@ -224,19 +224,15 @@ const getOrder = async (req, res) => {
 }
 
 const searchItems = async (req, res) => {
-  const searchQuery = req.params.query;
+  const { q } = req.query
   try {
-    const regex = new RegExp(searchQuery, 'i');
-    const result = await db.collection('items').find({ name: regex }).toArray();
-
-    if (result.length > 0) {
-      res.status(200).json({ status: 200, data: result, message: `Search results for '${searchQuery}'.` });
-    } else {
-      res.status(404).json({ status: 404, message: `No items found for '${searchQuery}'.` });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ status: 500, message: 'Internal Server Error' });
+    const result = await db.collection('items').find({ name: { $regex: new RegExp(q, 'i') } }).toArray();
+    result.length > 0
+      ? res.status(200).json({ status: 200, data: result })
+      : res.status(404).json({ status: 404, data: result, message: `No items found for "${q}".` });
+  }
+  catch (error) {
+    return res.status(500).json({ status: 500, message: 'Internal Server Error' });
   }
 }
 
@@ -267,6 +263,6 @@ express()
   .get('/brands/:brandId', getBrand) // Enpoint for getting a Brand details based on its id
   .get('/order/:orderId', getOrder) // Get an order based on an ID
   .post('/order', newOrder) // endpoints for submittimg an order
-  .get('/search/:query', searchItems) // Endpoint to search items
+  .get('/search', searchItems) // Endpoint to search items
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));

@@ -27,14 +27,13 @@ export const Navbar = () => {
 
   /* changing searchValue as the user types */
   const searchInput = (event) => {
-    console.log(event.target.value);
     setSearchValue(event.target.value)
   }
 
   /* navigate to search results page */
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate(`/search/${searchValue}`);
+    navigate(`/search?q=${searchValue}`);
   }
 
   return (
