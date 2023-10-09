@@ -9,7 +9,9 @@ export const useFetch = (endpoint) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}${endpoint}`);
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}${endpoint}`,
+          { credentials: 'include' }
+        );
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

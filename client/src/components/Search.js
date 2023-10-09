@@ -23,7 +23,9 @@ export const Search = () => {
   }
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/search?q=${query}`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/search?q=${query}`,
+      { credentials: 'include' }
+    )
       .then((res) => res.json())
       .then((data) => setSearchResults(data.data))
       .catch((error) => console.log(error))
