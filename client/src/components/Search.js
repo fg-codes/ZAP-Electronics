@@ -9,7 +9,7 @@ export const Search = () => {
   const [searchResults, setSearchResults] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(9);
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
 
   const query = params.get('q')
   const top = useRef(null);
