@@ -37,9 +37,13 @@ export const Item = () => {
   // we need to fetch the brand details every time we load the item page
   useEffect(() => {
     item &&
-      fetch(`${process.env.REACT_APP_BACKEND_URL}/brands/${item.data.companyId}`,
-        { credentials: 'include' }
-      )
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/brands/${item.data.companyId}`, {
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
         .then(res => res.json())
         .then(data => setBrand(data.data))
         .catch(error => console.log(error))
@@ -47,9 +51,13 @@ export const Item = () => {
 
   // loading few items for the "you may be interested in" section
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/items`,
-      { credentials: 'include' }
-    )
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/items`, {
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
       .then(res => res.json())
       .then(data => {
         setRandomItems(data.data)
