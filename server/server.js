@@ -283,4 +283,6 @@ express()
   .post('/order', newOrder) // endpoints for submittimg an order
   .get('/search', searchItems) // Endpoint to search items
 
+  .get('/online', (req,res) => res.status(200).json("OK ONLINE"))
+
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
