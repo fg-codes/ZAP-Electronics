@@ -2,8 +2,9 @@ require('dotenv').config();
 
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const { MongoClient } = require('mongodb');
-const { MONGO_URI } = process.env;
+const { MONGO_URI, FE_ORIGIN_BASE_URL } = process.env;
 const options = { useNewUrlParser: true, useunifiedTopology: true };
 
 const client = new MongoClient(MONGO_URI, options);
@@ -252,7 +253,24 @@ express()
   .use(express.static('./server/assets'))
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
-  .use('/', express.static(__dirname + '/'))
+  .use(cors({
+    origin: FE_ORIGIN_BASE_URL,
+    credentials: true,
+  }))
+  .use(function (req, res, next) {
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Origin', FE_ORIGIN_BASE_URL);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header(
+      'Access-Control-Allow-Headers',
+      'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
+    );
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    } else {
+      next();
+    }
+  })
 
   .get('/items', getItems) // Endpoint for getting all items.
   .get('/categories', getCategories) // Endpoint for getting all categories.
