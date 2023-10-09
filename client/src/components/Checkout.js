@@ -77,6 +77,7 @@ export const Checkout = () => {
       })
         .then(res => res.json())
         .then(() => {
+          console.log({ _id, userDetails, orderSummary })
           setCartItems([]);
           navigate(`/order/${_id}`);
         })

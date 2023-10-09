@@ -187,65 +187,26 @@ const addToCart = async (req, res) => {
   }
 };
 
-// Delete an item from the cart.
-const deleteFromCart = async (req, res) => {
-  const { itemId, numInStock } = req.body
-  try {
-
-    // deleting the item from the cart
-    const deleteItem = await db.collection('cart').updateOne(
-      { _id: 'global_cart' },
-      { $pull: { items: { id: itemId } } }
-    )
-
-    // updating the numInStock to its original quantity
-    const updatingItem = await db.collection('items').updateOne(
-      { _id: itemId },
-      { $set: { numInStock } }
-    )
-    return res.status(200).json({ status: 200, message: 'ok' })
-  }
-  catch (error) {
-    return res.status(400).json({ status: 400, message: 'Failed to delete item from cart.' });
-  }
-};
-
-// Get all items in the cart.
-const getCart = async (req, res) => {
-  try {
-    const cart = await db.collection('cart').findOne({ _id: 'global_cart' });
-    if (cart) {
-      return res
-        .status(200)
-        .json({ status: 200, data: cart.items, message: 'Retrieved cart.' });
-    } else {
-      await db.collection('cart').insertOne({ _id: 'global_cart', items: [] });
-      console.log(cart);
-      return res
-        .status(200)
-        .json({ status: 200, data: [], message: 'Retrieved cart.' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ status: 500, message: 'Internal Server Error' });
-  }
-};
-
 // Handle checkout
 const newOrder = async (req, res) => {
   const { _id, userDetails, orderSummary } = req.body;
   const date = new Date().toISOString().slice(0, 22);
   try {
     await db.collection('orders').insertOne({ _id, date, userDetails, orderSummary });
-    await db.collection('cart').updateOne(
-      { _id: 'global_cart' },
-      { $set: { items: [] } }
-    )
-    return res.status(201).json({ status: 201, message: 'Checkout processed successfully.' });
+
+    orderSummary.cartItems.forEach((item) => {
+      const { _id } = item.item
+      const quantity = item.quantity
+      db.collection('items').updateOne(
+        { _id },
+        { $inc: { numInStock: -quantity } }
+      )
+    })
   }
   catch (error) {
-    return res.status(500).json({ status: 500, message: 'An error occurred while processing the checkout.', });
+    return res.status(500).json({ status: 500, message: 'Internal Server Error' })
   }
+  res.status(201).json({ status: 201, message: "Order created successfully" })
 };
 
 const getOrder = async (req, res) => {
@@ -304,11 +265,8 @@ express()
   .get('/brands', getBrands) // Endpoint for getting all companies
   .get('/brand/:companyId', getItemsByCompany) //Endpoint for getting items by a specific companyId
   .get('/brands/:brandId', getBrand) // Enpoint for getting a Brand details based on its id
-  // .get('/cart', getCart) // Endpoint for getting the cart.
-  // .put('/cart', addToCart) // Endpoint for adding an item to the cart.
-  // .patch('/cart', deleteFromCart) // Endpoint for deleting an item from the cart.
   .get('/order/:orderId', getOrder) // Get an order based on an ID
-  .post('/order', newOrder) // endpoints for submittimg an order.
-  .get('/search/:query', searchItems) // Endpoint to search items.
+  .post('/order', newOrder) // endpoints for submittimg an order
+  .get('/search/:query', searchItems) // Endpoint to search items
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
