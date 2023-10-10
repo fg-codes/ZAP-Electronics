@@ -240,7 +240,9 @@ const searchItems = async (req, res) => {
 express()
   .use(morgan('dev'))
   .use(express.json())
-  .use(cors())
+  .use(cors(
+    { origin: FE_ORIGIN_BASE_URL }
+  ))
   .use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", FE_ORIGIN_BASE_URL);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
