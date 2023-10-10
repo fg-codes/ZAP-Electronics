@@ -24,7 +24,7 @@ export const Search = () => {
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/search?q=${query}`, {
-      credentials: 'include',
+      method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

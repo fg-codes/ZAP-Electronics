@@ -10,7 +10,7 @@ export const useFetch = (endpoint) => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}${endpoint}`, {
-          credentials: 'include',
+          method: 'GET',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

@@ -69,7 +69,6 @@ export const Checkout = () => {
       const _id = Math.random().toString(16).slice(5)
       fetch(`${process.env.REACT_APP_BACKEND_URL}/order`, {
         method: 'POST',
-        credentials: 'include',
         headers: {
           'Accept': 'application/json',
           'Content-type': 'application/json'

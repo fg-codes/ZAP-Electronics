@@ -38,7 +38,7 @@ export const Item = () => {
   useEffect(() => {
     item &&
       fetch(`${process.env.REACT_APP_BACKEND_URL}/brands/${item.data.companyId}`, {
-        credentials: 'include',
+        method: 'GET',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ export const Item = () => {
   // loading few items for the "you may be interested in" section
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/items`, {
-      credentials: 'include',
+      method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
