@@ -238,27 +238,16 @@ const searchItems = async (req, res) => {
 }
 
 express()
-  .use(function (req, res, next) {
-    res.header(
-      'Access-Control-Allow-Methods',
-      'OPTIONS, HEAD, GET, PUT, POST, DELETE'
-    );
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
-    );
-    next();
-  })
   .use(morgan('dev'))
-  .use(express.static('./server/assets'))
   .use(express.json())
-  .use(express.urlencoded({ extended: false }))
   .use(cors({
-    origin: "https://zap-electronics.vercel.app"
+    origin: FE_ORIGIN_BASE_URL,
+    credentials: true,
   }))
   .use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', "https://zap-electronics.vercel.app");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Origin', FE_ORIGIN_BASE_URL);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header(
       'Access-Control-Allow-Headers',
       'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'

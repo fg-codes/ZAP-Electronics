@@ -15,7 +15,7 @@ export const useFetch = (endpoint) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           }
-        });
+        })
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
