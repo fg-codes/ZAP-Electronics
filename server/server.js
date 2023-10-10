@@ -240,23 +240,7 @@ const searchItems = async (req, res) => {
 express()
   .use(morgan('dev'))
   .use(express.json())
-  .use(cors({
-    origin: '*',
-  }))
-  .use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header(
-      'Access-Control-Allow-Headers',
-      'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
-    );
-    if ('OPTIONS' == req.method) {
-      res.send(200);
-    } else {
-      next();
-    }
-  })
-
+  .use(cors())
   .get('/items', getItems) // Endpoint for getting all items.
   .get('/categories', getCategories) // Endpoint for getting all categories.
   .get('/category/:category', getItemsByCategory) // Endpoint for getting all items within a specified category.
