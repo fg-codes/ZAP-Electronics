@@ -254,10 +254,10 @@ express()
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
   .use(cors({
-    origin: "https://zap-electronics.vercel.app/"
+    origin: "https://zap-electronics.vercel.app"
   }))
   .use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', "https://zap-electronics.vercel.app/");
+    res.header('Access-Control-Allow-Origin', "https://zap-electronics.vercel.app");
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header(
       'Access-Control-Allow-Headers',
