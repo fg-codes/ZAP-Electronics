@@ -241,6 +241,11 @@ express()
   .use(morgan('dev'))
   .use(express.json())
   .use(cors())
+  .use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", FE_ORIGIN_BASE_URL);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  })
   .get('/items', getItems) // Endpoint for getting all items.
   .get('/categories', getCategories) // Endpoint for getting all categories.
   .get('/category/:category', getItemsByCategory) // Endpoint for getting all items within a specified category.
@@ -252,6 +257,6 @@ express()
   .post('/order', newOrder) // endpoints for submittimg an order
   .get('/search', searchItems) // Endpoint to search items
 
-  .get('/online', (req,res) => res.status(200).json("OK ONLINE"))
+  .get('/online', (req, res) => res.status(200).json("OK ONLINE"))
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
