@@ -4,7 +4,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
-const { MONGO_URI, FE_ORIGIN_BASE_URL } = process.env;
+const { MONGO_URI } = process.env;
 const options = { useNewUrlParser: true, useunifiedTopology: true };
 
 const client = new MongoClient(MONGO_URI, options);
@@ -155,39 +155,6 @@ const getBrand = async (req, res) => {
   }
 };
 
-// Add an item to the cart.
-const addToCart = async (req, res) => {
-  const { id, name, price, category, numInStock, quantity, imageSrc } = req.body;
-  try {
-    const findResult = await db.collection('cart').findOne({ 'items.id': id });
-    if (findResult) {
-      // update the item quantity
-      await db.collection('cart').updateOne(
-        { 'items.id': id },
-        {
-          $inc: { [`items.$.quantity`]: quantity },
-          $set: { [`items.$.numInStock`]: numInStock },
-        }
-      );
-    } else {
-      // add item to the cart with a quantity of 1
-      await db.collection('cart').updateOne(
-        { _id: 'global_cart' },
-        { $push: { items: { id, name, price, category, numInStock, quantity, imageSrc } } }
-      )
-    }
-    // decrementing stock quantity for this item
-    await db
-      .collection('items')
-      .updateOne({ _id: +id }, { $inc: { numInStock: -quantity } });
-    return res.status(200).json({ status: 200, message: 'item added to cart' });
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ status: 500, message: 'Internal Server Error' });
-  }
-};
-
 // Handle checkout
 const newOrder = async (req, res) => {
   const { _id, userDetails, orderSummary } = req.body;
@@ -251,7 +218,6 @@ express()
   .get('/order/:orderId', getOrder) // Get an order based on an ID
   .post('/order', newOrder) // endpoints for submittimg an order
   .get('/search', searchItems) // Endpoint to search items
-
   .get('/online', (req, res) => res.status(200).json("OK ONLINE"))
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
