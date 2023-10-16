@@ -9,7 +9,7 @@ export const useFetch = (endpoint) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${endpoint}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}${endpoint}`, {
           method: 'GET',
           headers: {
             'Accept': 'application/json',

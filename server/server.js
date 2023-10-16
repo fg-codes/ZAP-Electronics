@@ -4,7 +4,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
-const { MONGO_URI } = process.env;
+const { MONGO_URI, FE_ORIGIN_BASE_URL } = process.env;
 const options = { useNewUrlParser: true, useunifiedTopology: true };
 
 const client = new MongoClient(MONGO_URI, options);
@@ -207,6 +207,15 @@ const searchItems = async (req, res) => {
 express()
   .use(morgan('dev'))
   .use(express.json())
+  .use(cors({ origin: FE_ORIGIN_BASE_URL }))
+  // Add headers before the routes are defined
+  .use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', FE_ORIGIN_BASE_URL)
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+    res.setHeader('Access-Control-Allow-Credentials', false);
+    next();
+  })
 
   .get('/items', getItems) // Endpoint for getting all items.
   .get('/categories', getCategories) // Endpoint for getting all categories.

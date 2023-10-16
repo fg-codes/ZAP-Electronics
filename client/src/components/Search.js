@@ -23,7 +23,7 @@ export const Search = () => {
   }
 
   useEffect(() => {
-    fetch(`/search?q=${query}`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}search?q=${query}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

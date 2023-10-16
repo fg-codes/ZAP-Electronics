@@ -67,7 +67,7 @@ export const Checkout = () => {
     }
     else {
       const _id = Math.random().toString(16).slice(5)
-      fetch(`/order`, {
+      fetch(`${process.env.REACT_APP_BACKEND_URL}order`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
