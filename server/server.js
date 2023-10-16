@@ -212,9 +212,13 @@ express()
   .use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', FE_ORIGIN_BASE_URL)
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept')
     res.setHeader('Access-Control-Allow-Credentials', false);
-    next();
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    } else {
+      next();
+    }
   })
 
   .get('/items', getItems) // Endpoint for getting all items.
