@@ -2,13 +2,13 @@
 
 <br>
 
+### <p align="center"><a href="https://zap-electronics.vercel.app/">🔗 Try it Live!</a></p>
+
 ## 🟢 About
 
-The main intention behind this beautiful full-stack project was to learn and explore new skills. It allowed me to dive into both front-end development, using React, and back-end development with Node.js, Express, and MongoDB. I had complete control over the entire development process, allowing me to customize and optimize every aspect of the project to meet my specific needs and goals.
+The main intention behind this full-stack project was to learn and explore new skills. It allowed me to dive into both front-end development, using React, and back-end development with Node.js, Express, and MongoDB. I had complete control over the entire development process, allowing me to customize and optimize every aspect of the project to meet my specific needs and goals.
 
 Please be aware that this project does not support actual transactions, and its design is not responsive, as it was not part of the initial Minimum Viable Product (MVP). This project is primarily a learning platform for me to grow and develop my expertise.
-
-<!-- ![mvp demo](./mvp.png) -->
 
 <br>
 
@@ -23,22 +23,25 @@ Please be aware that this project does not support actual transactions, and its 
 <br>
 
 ## 🟢 Demo
-<!-- https://github.com/fg-codes/Twixx_Twitter-X_clone_project/assets/114963609/93ee51f6-1387-4ce7-bbb9-df1b29b8021a -->
+
+<br>
+
+### <p align="center">Experience the live demo <a href="https://zap-electronics.vercel.app/">Here!</a></p>
 
 <br>
 
 ## 🟢 Project Setup
-#### Server side: 
+### Server side: 
 1. Open a terminal in VS Code
 2. Navigate to the server directory with `cd server`
 3. Type `yarn install`
 4. Set up your dotenv file and configure it with your database login details, using 'MONGO_URI' key.
 5. Add this line to your dotenv file: `FE_ORIGIN_BASE_URL=http://localhost:3000`
-6. Use `yarn start` to run the environment
+6. Use `yarn start` to run the backend environment
 
-#### Client side:
+### Client side:
 1. Open a second terminal
 2. Navigate to the client directory
 3. Type `yarn install`
-4. Create a dotenv file and add this line: `REACT_APP_BACKEND_URL=http://localhost:4000`
+4. Create a dotenv file and add this line: `REACT_APP_BACKEND_URL=http://localhost:4000/`
 5. Use `yarn start` to run the frontend environment
