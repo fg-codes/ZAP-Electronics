@@ -213,12 +213,8 @@ express()
     res.setHeader('Access-Control-Allow-Origin', FE_ORIGIN_BASE_URL)
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept')
-    res.setHeader('Access-Control-Allow-Credentials', false);
-    if ('OPTIONS' == req.method) {
-      res.send(200);
-    } else {
-      next();
-    }
+    res.setHeader('Access-Control-Allow-Credentials', false)
+    'OPTIONS' == req.method ? res.send(200) : next()
   })
 
   .get('/items', getItems) // Endpoint for getting all items.
@@ -231,6 +227,5 @@ express()
   .get('/order/:orderId', getOrder) // Get an order based on an ID
   .post('/order', newOrder) // endpoints for submittimg an order
   .get('/search', searchItems) // Endpoint to search items
-  .get('/online', (req, res) => res.status(200).json("OK ONLINE"))
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
