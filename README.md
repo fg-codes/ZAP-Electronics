@@ -28,7 +28,13 @@ Please be aware that this project does not support actual transactions, and its 
 
 ### <p align="center">Experience the live demo <a href="https://zap-electronics.vercel.app/">Here!</a></p>
 
-<br>
+<p align="center">
+  <img align="center" src="./demo1.png" width="70%"><br><br>
+  <img align="center" src="./demo2.png" width="70%"><br><br>  
+  <img align="center" src="./demo3.png" width="70%"><br><br>
+  <img align="center" src="./demo4.png" width="70%"><br><br>
+  <img align="center" src="./demo5.png" width="70%"><br><br>
+</p>
 
 ## 🟢 Project Setup
 ### Server side: 
